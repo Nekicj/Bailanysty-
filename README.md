@@ -42,7 +42,7 @@ Before you begin, ensure you have the following installed:
 1. Clone the repository:
 ```bash
 git clone https://github.com/Nekicj/Bailanysty-.git
-cd ailanysta
+cd Bailanysty-repo
 ```
 
 2. Create and activate a virtual environment:
