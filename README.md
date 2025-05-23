@@ -59,32 +59,20 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Create a `.env` file in the project root with the following variables:
-```
-DEBUG=True
-SECRET_KEY=your_secret_key
-DATABASE_URL=postgres://user:password@localhost:5432/bailanysty
-```
 
-5. Set up the PostgreSQL database:
-```bash
-# Create a new PostgreSQL database named 'Bailanysty'
-# Update database settings in settings.py or use environment variables
-```
-
-6. Run migrations:
+4. Run migrations:
 ```bash
 python manage.py migrate
 ```
 
-7. Collect static files:
+5. Collect static files:
 ```bash
 python manage.py collectstatic
 ```
 
 ## Running the Application
 
-1. Start the development server:
+6. Start the development server:
 ```bash
 python manage.py runserver
 ```
@@ -120,53 +108,12 @@ python manage.py runserver
 ### Debug Settings
 Debug mode is enabled by default in development. Configure it using the `DEBUG` environment variable.
 
-### Database Configuration
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Bailanysty',
-        'USER': 'your_database_user',
-        'PASSWORD': 'your_database_password',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-```
-
 ### Static and Media Files
 - Static files are served using WhiteNoise
 - Media files are stored in the `media/` directory
 - Static files are collected to `staticfiles/`
 
-## Production Deployment
-
-1. Update settings for production:
-- Set `DEBUG=False` in .env
-- Configure proper `ALLOWED_HOSTS`
-- Set secure SSL/HTTPS settings
-
-2. Configure Gunicorn:
-```bash
-gunicorn ailanysta.wsgi:application
-```
 
 3. Static files serving with WhiteNoise:
 - Ensure `whitenoise.middleware.WhiteNoiseMiddleware` is in `MIDDLEWARE`
 - Run `python manage.py collectstatic`
-
-4. Security considerations:
-- Use strong SECRET_KEY
-- Enable HTTPS
-- Configure proper CORS settings
-- Set secure cookie settings
-- Use environment variables for sensitive data
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
-
