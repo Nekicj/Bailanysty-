@@ -1,0 +1,32 @@
+{% extends 'posts/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Followers of @{{ profile_user.username }}</h4>
+                </div>
+                <div class="card-body">
+                    {% for user in users %}
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ user.follower.profile_picture.url|default:'/media/images/default_profile.png' }}" 
+                            class="rounded-circle me-3" 
+                            width="50" 
+                            height="50" 
+                            alt="Profile">
+                        <a href="{% url 'profile' user.follower.username %}" 
+                           class="text-decoration-none">
+                            @{{ user.follower.username }}
+                        </a>
+                    </div>
+                    {% empty %}
+                    <div class="alert alert-info">No followers yet</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

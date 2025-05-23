@@ -1,0 +1,27 @@
+{% extends 'posts/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Notifications</h4>
+                </div>
+                <div class="card-body">
+                    {% for notification in notifications %}
+                    <div class="alert {% if not notification.read %}alert-info{% else %}alert-secondary{% endif %}">
+                        <a href="{{ notification.link }}" class="text-decoration-none">
+                            {{ notification.message }}
+                        </a>
+                        <small class="text-muted float-end">{{ notification.created_at|timesince }} ago</small>
+                    </div>
+                    {% empty %}
+                    <div class="alert alert-warning">No notifications yet</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

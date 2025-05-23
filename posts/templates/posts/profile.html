@@ -1,0 +1,108 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Profile Card -->
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <img src="{% if profile_user.profile_picture %}{{ profile_user.profile_picture.url }}{% else %}{% static 'images/default_profile.png' %}{% endif %}" 
+                     class="rounded-circle mb-3 shadow" 
+                     width="120" 
+                     height="120">
+                <h2 class="mb-2">@{{ profile_user.username }}</h2>
+                <p class="text-muted mb-4">{{ profile_user.bio }}</p>
+
+                <div class="d-flex justify-content-center gap-3 mb-4">
+                    <a href="{% url 'followers' profile_user.username %}" 
+                       class="btn btn-outline-secondary">
+                        <i class="fas fa-users me-2"></i>
+                        {{ profile_user.followers.count }} Followers
+                    </a>
+                    <a href="{% url 'following' profile_user.username %}" 
+                       class="btn btn-outline-secondary">
+                        <i class="fas fa-user-friends me-2"></i>
+                        {{ profile_user.following.count }} Following
+                    </a>
+                </div>
+
+                {% if user.is_authenticated and user != profile_user %}
+                <form method="post" action="{% url 'toggle_follow' profile_user.username %}">
+                    {% csrf_token %}
+                    <button type="submit" 
+                            class="btn btn-{% if user in profile_user.followers.all %}danger{% else %}primary{% endif %}">
+                        {% if user in profile_user.followers.all %}
+                            <i class="fas fa-user-minus me-2"></i>Unfollow
+                        {% else %}
+                            <i class="fas fa-user-plus me-2"></i>Follow
+                        {% endif %}
+                    </button>
+                </form>
+                {% endif %}
+
+                {% if user == profile_user %}
+                <a href="{% url 'edit_profile' %}" 
+                   class="btn btn-outline-secondary mt-3">
+                    <i class="fas fa-edit me-2"></i>Edit Profile
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- User Posts -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-feather me-2"></i>Posts</h5>
+            </div>
+            <div class="card-body">
+                {% for post in posts %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <small class="text-muted">{{ post.created_at|timesince }} ago</small>
+                            {% if user == post.author %}
+                            <div class="dropdown">
+                                <button class="btn btn-link text-muted p-0" 
+                                        type="button" 
+                                        data-bs-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" 
+                                           href="{% url 'edit_post' post.id %}">
+                                            <i class="fas fa-edit me-2"></i>Edit
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" 
+                                           href="{% url 'delete_post' post.id %}">
+                                            <i class="fas fa-trash me-2"></i>Delete
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <p class="card-text">{{ post.text }}</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-primary">
+                                <i class="fas fa-heart me-1"></i>{{ post.likes.count }}
+                            </span>
+                            <span class="badge bg-secondary">
+                                <i class="fas fa-comment me-1"></i>{{ post.comments.count }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="alert alert-info mb-0">
+                    <i class="fas fa-info-circle me-2"></i>No posts yet.
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
