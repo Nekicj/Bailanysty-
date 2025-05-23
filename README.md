@@ -41,7 +41,7 @@ Before you begin, ensure you have the following installed:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Nekicj/Bailanysty-.git
+git clone https://github.com/Nekicj/Bailanysty-repo.git
 cd Bailanysty-repo
 ```
 
