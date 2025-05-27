@@ -22,7 +22,7 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'text': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Add a comment...'
+                'placeholder': 'Добавить комментарий'
             })
         }
     
@@ -31,7 +31,7 @@ class CommentForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        instance = super().save(commit=False)
+        instance = super().save(commit=False) # TRUE MODIFY BEFORE SAVING aaa
         if self.user:
             instance.author = self.user
         if commit:

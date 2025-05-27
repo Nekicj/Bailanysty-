@@ -17,8 +17,8 @@ def create_comment_notification(sender, instance, created, **kwargs):
             link=f"/post/{instance.post.id}/"
         )
 
-#М2М ОЕС АРБУЗ
-@receiver(m2m_changed, sender=Post.likes.through)
+#М2М АРБУЗ NE POST_SAVE FUU 
+@receiver(m2m_changed, sender=Post.likes.through) 
 def create_like_notification(sender, instance, action, pk_set, **kwargs):
     if action == "post_add":
         user = CustomUser.objects.get(pk=next(iter(pk_set)))

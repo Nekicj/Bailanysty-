@@ -70,9 +70,8 @@ def following_list(request, username):
 
 @login_required
 def toggle_theme(request):
-    """Toggle between light and dark theme for the user."""
     user = request.user
-    user.theme = 'dark' if user.theme == 'light' else 'light'
+    user.theme = 'dark' if user.theme == 'light' else 'light' # я не достаточно черный чтобы быть черным и не достаточно белый чтобы быть белым
     user.save()
     
     return redirect(request.META.get('HTTP_REFERER', 'feed'))
