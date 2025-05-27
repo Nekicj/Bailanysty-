@@ -10,7 +10,7 @@ class PostForm(forms.ModelForm):
             'text': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 3,
-                'placeholder': 'What\'s on your mind?'
+                'placeholder': 'Введите текст для поста: '
             })
         }
 
@@ -22,7 +22,7 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'text': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Добавить комментарий'
+                'placeholder': 'Добавить комментарий: '
             })
         }
     
@@ -31,7 +31,7 @@ class CommentForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        instance = super().save(commit=False) # TRUE MODIFY BEFORE SAVING aaa
+        instance = super().save(commit=False) # TRUE          MODIFY BEFORE SAVING aaa
         if self.user:
             instance.author = self.user
         if commit:

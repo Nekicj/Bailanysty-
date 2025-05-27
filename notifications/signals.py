@@ -19,10 +19,21 @@ def create_comment_notification(sender, instance, created, **kwargs):
 
 #М2М АРБУЗ NE POST_SAVE FUU 
 @receiver(m2m_changed, sender=Post.likes.through) 
-def create_like_notification(sender, instance, action, pk_set, **kwargs):
+def create_like_notification(sender, instance, action, pk_set, **kwargs): #instance - whose post was liked
+
+    #if action == "post_add":
+    #    for user_id in pk_set:
+    #        user = CustomUser.objects.get(pk=user_id)
+    #        if user != instance.author:
+    #            Notification.objects.create(
+    #            user=instance.author,
+    #            message=f"{user.username} лайкнул ваш пост",
+    #            link=f"/post/{instance.id}/"
+    #        )
+
     if action == "post_add":
-        user = CustomUser.objects.get(pk=next(iter(pk_set)))
-        # ОФАК 
+        user = CustomUser.objects.get(pk=next(iter(pk_set))) # первый id из множества
+        # ОФК 
         if user != instance.author:
             Notification.objects.create(
                 user=instance.author,

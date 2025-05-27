@@ -30,6 +30,9 @@ def create_post(request):
         form = PostForm()
     return render(request, 'posts/create_post.html', {'form': form})
 
+
+
+
 def profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
     posts = Post.objects.filter(author=user).prefetch_related('comments').order_by('-created_at')
@@ -38,10 +41,12 @@ def profile(request, username):
         'posts': posts
     })
 
+
+
 @login_required
 @require_POST
 def like_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post, id=post_id) 
     user = request.user
     liked = False
 
@@ -68,7 +73,7 @@ def add_comment(request, post_id):
             comment = Comment(post=post, author=request.user, text=content)
             comment.save()
             
-            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest': #fetch or xmlhttprequest javascript
                 return JsonResponse({
                     'status': 'success',
                     'comment_id': comment.id,
@@ -108,7 +113,7 @@ def edit_post(request, post_id):
 @login_required
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id, author=request.user)
-    if request.method == 'POST':
+    if request.method == 'POST': #not ajax
         post.delete()
         return redirect('profile', username=request.user.username)
     return render(request, 'posts/confirm_delete.html', {'post': post})

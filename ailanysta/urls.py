@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+
 from posts import views
 from users import views as user_views
 
@@ -18,7 +19,6 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('', include('posts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    
     path('notifications/', include('notifications.urls')),
     
     path('toggle-follow/<str:username>/', user_views.toggle_follow, name='toggle_follow'),

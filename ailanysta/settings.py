@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'ailanysta.wsgi.application'
 #        'PORT': '5432',
 #    }
 #}
-
+# BBEEBEE
 
 DATABASES = {
         'default': {
